@@ -1,3 +1,4 @@
+import sys
 class FinancialManager:
     def __init__(self) -> None:
         pass
@@ -7,8 +8,9 @@ class FinancialManager:
             return
         print("Here are the client's requests:")
         print(requestForm.get_request())
-        print("The Senior Customer Service has approved this request, please write your feedback on budget:")
-        feedback = input()
-        requestForm.add_comment(feedback)
+        print("The Senior Customer Service has approved this request.")
+        print("Please write your feedback on budget, press Ctrl+Z to end input.")
+        feedback = sys.stdin.readlines()
+        requestForm.add_comment(''.join(feedback))
         requestForm.set_status("COMMENT_ADDED")
         print("Thank you for your feedback.")

@@ -8,8 +8,7 @@ class SeniorCustomerService:
         print("Here are the client's requests:")
         print(requestForm.get_request())
         while True:
-            print("Please type \"A\" to approve, or \"D\" to decilne.")
-            revResult = input()
+            revResult = input("Please type \"A\" to approve, or \"D\" to decilne.")
             if revResult == "A":
                 requestForm.set_status("SCS_APPROVE")
                 print("Request approved.")
