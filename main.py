@@ -1,4 +1,5 @@
 import os
+
 from CS import CustomerService
 from RF import RequestForm
 from SCS import SeniorCustomerService
@@ -7,16 +8,20 @@ from AM import AdministrationManager
 from DM import DepartmentManager
 from ST import SubTeam
 from AF import ApplicationForm
+from HR import HumanResource
+from HRF import HRForm
+from BNF import BudgetNegotiationForm
 
 passwdDict = {
-    "CS": "CS123",
+    "CS" : "CS123",
     "SCS": "SCS123",
-    "FM": "FM123",
-    "AM": "AM123",
-    "SM": "SM123",
-    "PM": "PM123",
+    "FM" : "FM123",
+    "AM" : "AM123",
+    "SM" : "SM123",
+    "PM" : "PM123",
     "SST": "SST123",
-    "PST": "PST123"
+    "PST": "PST123",
+    "HR" : "HR123"
 }
 
 prompt = """
@@ -30,11 +35,11 @@ Enter a number to continue, type "Q" to logout.
 
 csPrompt  = prompt%("Customer Service",         "  1) Fill client's request.")
 scsPrompt = prompt%("Senior Customer Service",  "  1) Review form from Customer Service.\n  2) Review form from Administration Manager.")
-fmPrompt  = prompt%("Financial Manager",        "  1) Review form from Senior Customer Service.")
+fmPrompt  = prompt%("Financial Manager",        "  1) Review form from Senior Customer Service.\n  2) Review budget negotiation from Service Manager.\n  3) Review budget negotiation from Production Manager.")
 amPrompt  = prompt%("Administration Manager",   "  1) Review form from Financial Manager.")
-dmTaskPrompt = "  1) Fill an application with client's needs.\n  2) Review plan and comments from sub-team."
+hrPrompt  = prompt%("Human Resource Team",      "  1) Manage recruitment for the Service Team.\n  2) Manage recruitment for the Production Team.")
+dmTaskPrompt = "  1) Fill an application with client's needs.\n  2) Review plan and comments from sub-team.\n  3) Manage staffing issues.\n  4) Review recruitment result from HR team.\n  5) Send a budget negotiation to Financail Manager.\n  6) Review the negotiation result from Finicail Manager."
 stTaskPrompt = "  1) Decide a plan for the activity."
-
 
 if __name__ == "__main__":
     custServ = CustomerService()
@@ -51,6 +56,13 @@ if __name__ == "__main__":
     servAppForm = ApplicationForm()
     prodAppForm = ApplicationForm()
     AFs = {"SM": servAppForm, "SST": servAppForm, "PM": prodAppForm, "PST": prodAppForm}
+    humRes = HumanResource()
+    servHrForm = HRForm("Service Team")
+    prodHrForm = HRForm("Production Team")
+    HRFs = {"SM": servHrForm, "PM": prodHrForm}
+    servBudNegForm = BudgetNegotiationForm("Service Team")
+    prodBudNegForm = BudgetNegotiationForm("Production Team")
+    BNFs = {"SM": servBudNegForm, "PM": prodBudNegForm}
 
     while True:
         os.system("pause")
@@ -116,7 +128,15 @@ if __name__ == "__main__":
                 if wkType == "1":
                     # Review form from Senior Customer Service
                     os.system("cls")
-                    finMan.reviewFromSCS(reqFrom)
+                    finMan.review_from_SCS(reqFrom)
+                elif wkType == "2":
+                    # Review budget negotiation from Service Manager
+                    os.system("cls")
+                    finMan.review_budg_nego(BNFs["SM"])
+                elif wkType == "3":
+                    # Review budget negotiation from Production Manager.
+                    os.system("cls")
+                    finMan.review_budg_nego(BNFs["PM"])
                 else:
                     print("Invalid input!")
                 os.system("pause")
@@ -156,6 +176,22 @@ if __name__ == "__main__":
                     # Review plan and comments from sub-team
                     os.system("cls")
                     user.review_plan(AFs[userName])
+                elif wkType == "3":
+                    # Manage staffing issues
+                    os.system("cls")
+                    user.check_staffing(HRFs[userName])
+                elif wkType == "4":
+                    # Review recruitment result from HR team
+                    os.system("cls")
+                    user.rev_rec_res(HRFs[userName])
+                elif wkType == "5":
+                    # Send a budget negotiation to Financail Manager
+                    os.system("cls")
+                    user.send_budg_nego(BNFs[userName])
+                elif wkType == "6":
+                    # Review the negotiation result from Finicail Manager
+                    os.system("cls")
+                    user.review_neg_result(BNFs[userName])
                 else:
                     print("Invalid input!")
                 os.system("pause")
@@ -180,3 +216,23 @@ if __name__ == "__main__":
                 os.system("cls")
             os.system("cls")
         
+        elif userName == "HR":
+            # Human Resource
+            while True:
+                print(hrPrompt)
+                wkType = input()
+                if wkType == "Q":
+                    break
+                if wkType == "1":
+                    # Manage recruitment for the Service Team
+                    os.system("cls")
+                    humRes.recruit_staff(HRFs["SM"])
+                elif wkType == "2":
+                    # Manage recruitment for the Production Team
+                    os.system("cls")
+                    humRes.recruit_staff(HRFs["PM"])
+                else:
+                    print("Invalid input!")
+                os.system("pause")
+                os.system("cls")
+            os.system("cls")
