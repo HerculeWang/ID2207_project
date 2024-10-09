@@ -1,6 +1,8 @@
 class SeniorCustomerService:
+    
     def __init__(self) -> None:
         pass
+    
     def reviewFromCS(self, requestForm):
         if requestForm.get_status() != "REQUEST_FILLED":
             print("No request form available!")
@@ -19,6 +21,7 @@ class SeniorCustomerService:
                 break
             else:
                 print("Invalid input!")
+    
     def reviewFromAM(self, requestForm):
         if requestForm.get_status() not in ["AM_APPROVE", "AM_DECLINE"]:
             print("No request form available!")

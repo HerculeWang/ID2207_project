@@ -1,7 +1,10 @@
 import sys
+
 class HumanResource:
+    
     def __init__(self) -> None:
         pass
+    
     def recruit_staff(self, hrForm):
         if hrForm.get_status() != "INSUFF":
             print("No application form available!")

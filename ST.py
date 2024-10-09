@@ -2,10 +2,13 @@ import sys
 
 class SubTeam:
     name = ""
+    
     def __init__(self, name) -> None:
         self.name = name
+    
     def get_name(self):
         return self.name
+    
     def start_task(self, appForm):
         if appForm.get_status() != "NEEDS_ADDED":
             print("No application form available!")

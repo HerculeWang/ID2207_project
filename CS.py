@@ -1,7 +1,10 @@
 import sys
+
 class CustomerService:
+    
     def __init__(self) -> None:
         pass
+    
     def fillRequest(self, requestForm):
         if requestForm.get_status() != "INIT":
             print("No request form available!")

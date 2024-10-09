@@ -1,6 +1,8 @@
 class AdministrationManager:
+    
     def __init__(self) -> None:
         pass
+    
     def reviewFromFM(self, requestForm):
         if requestForm.get_status() != "COMMENT_ADDED":
             print("No request form available!")
