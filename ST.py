@@ -15,22 +15,21 @@ class SubTeam:
             return
         print("Here are the client's needs:")
         print(appForm.get_need())
-        print("\nPlease decide a plan for the activity, press Ctrl+Z to end input.")
-        plan = sys.stdin.readlines()
-        appForm.add_plan(''.join(plan))
-        print("Plan added.")
+        
         while True:
             ext = input("Would you like to require for extra budget? Type \"Y\" for Yes and \"N\" for No.")
             if ext == "N":
-                appForm.set_status("OPEN")
-                print("Thank you.")
                 break
             elif ext == "Y":
-                appForm.set_status("OPEN")
-                print("Please write done your extra requirements on budget, press Ctrl+Z to end input.")
-                comment = sys.stdin.readlines()
-                appForm.add_comment(''.join(comment))
+                comment = input("Please write done your extra requirement: ")
+                appForm.add_comment(comment)
                 print("Comment added.")
                 break
             else:
                 print("Invalid input!")
+        
+        appForm.set_status("OPEN")
+        print("\nPlease decide a plan for the activity, press Ctrl+Z to end input.")
+        plan = sys.stdin.readlines()
+        appForm.add_plan(''.join(plan))
+        print("Plan added.")
